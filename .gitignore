@@ -23,5 +23,7 @@ wheels/
 .env
 .venv
 mlruns/
+mlartifacts/
+mlflow.db
 node_modules/
 .next/
