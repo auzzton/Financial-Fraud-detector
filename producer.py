@@ -62,6 +62,8 @@ def main():
             time.sleep(random.uniform(0.1, 0.5))
     except KeyboardInterrupt:
         print("Stopping producer...")
+    except Exception as e:
+        print(f"Producer crashed: {e}")
     finally:
         producer.flush()
 
