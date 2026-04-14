@@ -9,6 +9,9 @@ CREATE TABLE IF NOT EXISTS transactions (
     status VARCHAR(50) DEFAULT 'PENDING'
 );
 
+ALTER TABLE transactions
+ADD COLUMN IF NOT EXISTS is_fraud BOOLEAN DEFAULT NULL;
+
 CREATE TABLE IF NOT EXISTS alerts (
     id SERIAL PRIMARY KEY,
     transaction_id VARCHAR(255) REFERENCES transactions(transaction_id),

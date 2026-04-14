@@ -21,6 +21,7 @@ class Transaction(Base):
     timestamp = Column(DateTime, nullable=False)
     status = Column(String(50), default='PROCESSED')
     risk_score = Column(Integer, default=0)
+    is_fraud = Column(Boolean, nullable=True, default=None)
 
 class Alert(Base):
     __tablename__ = "alerts"

@@ -21,3 +21,20 @@ def update_user_features(user_id: str, timestamp: datetime):
         redis_client.expire(redis_key, 25 * 3600)
     
     return count
+
+
+def increment_malicious_tally(user_id: str):
+    """
+    Increment long-lived high-risk tally used for 3-strike blocking.
+    """
+    redis_key = f"malicious_tally:{user_id}"
+    tally = redis_client.incr(redis_key)
+    if tally == 1:
+        redis_client.expire(redis_key, 30 * 24 * 3600)
+    return tally
+
+
+def get_malicious_tally(user_id: str):
+    redis_key = f"malicious_tally:{user_id}"
+    tally = redis_client.get(redis_key)
+    return int(tally) if tally is not None else 0
