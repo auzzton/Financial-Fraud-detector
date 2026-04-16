@@ -2,6 +2,7 @@ import os
 import json
 import asyncio
 import io
+import logging
 from datetime import datetime
 from fastapi import FastAPI, Depends, WebSocket, WebSocketDisconnect, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -51,6 +52,7 @@ async def websocket_alerts(websocket: WebSocket):
         while True:
             await websocket.receive_text()
     except WebSocketDisconnect:
+        logging.info("WebSocket connection closed")
         ws_clients.remove(websocket)
 
 async def broadcast_alert(data: dict):

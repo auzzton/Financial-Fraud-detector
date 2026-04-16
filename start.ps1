@@ -19,13 +19,8 @@ if (!(Test-Path "$root\frontend\node_modules")) {
 }
 
 Write-Host "Starting Docker infrastructure..." -ForegroundColor Green
+docker context use desktop-linux | Out-Null
 docker compose up -d
-
-Write-Host "Ensuring host Redis is available on 6379..." -ForegroundColor Green
-docker ps --format "{{.Names}}" | Select-String -SimpleMatch "fraud_redis_host" | Out-Null
-if ($LASTEXITCODE -ne 0) {
-    docker run -d --name fraud_redis_host -p 6379:6379 redis:7-alpine | Out-Null
-}
 
 Write-Host "Applying DB migration (is_fraud column)..." -ForegroundColor Green
 docker exec -i fraud_db psql -U admin -d fraud_db -c "ALTER TABLE transactions ADD COLUMN IF NOT EXISTS is_fraud BOOLEAN DEFAULT NULL;" | Out-Null
