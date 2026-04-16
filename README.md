@@ -1,4 +1,4 @@
-# Financial Fraud Detection - Runbook
+# Financial Fraud Detection 
 
 End-to-end fraud detection platform with:
 - Kafka transaction streaming
